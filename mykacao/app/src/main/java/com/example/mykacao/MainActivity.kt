@@ -110,6 +110,12 @@ class MainActivity : AppCompatActivity() , MapView.CurrentLocationEventListener,
         val adapter = ListViewAdpater(this, subList)
         binding.listViewTest.adapter = adapter
 
+        if (!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting()
+        }else {
+            checkRunTimePermission()
+        }
+
         thread(start = true) {
             while(dGpsLatitute == 0.0 && dGpsLongitute == 0.0){
                 Log.d("Test", "Thread! dGpsLatitute" + dGpsLatitute + "dGpsLongitute" + dGpsLongitute)
@@ -388,7 +394,7 @@ class MainActivity : AppCompatActivity() , MapView.CurrentLocationEventListener,
     }
 
     fun checkRunTimePermission() {
-
+        Log.d("Test", "checkRunTimePermission")
         //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
         val hasFineLocationPermission = ContextCompat.checkSelfPermission(
